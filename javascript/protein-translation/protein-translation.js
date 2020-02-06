@@ -1,10 +1,9 @@
-//
-// This is only a SKELETON file for the 'Protein Translation' exercise. It's been provided as a
-// convenience to get you started writing code faster.
-//
-
-// export 
-const translate = (rna) => {
+export const translate = (rna) => {
+    let polypeptide = [];
+    if (rna == undefined) {
+        return polypeptide;
+    }
+    let foundStop, position, trimmedRna;
     const proteins = [
         {   name: 'Methionine',
             codons: ['AUG']
@@ -30,29 +29,60 @@ const translate = (rna) => {
         {   name: 'STOP',
             codons: ['UAA', 'UAG', 'UGA']
         } 
-    ]
-    const polypeptide = [];
-    // const stopCodons= proteins[7].codons; // => ["UAA", "UAG", "UGA"]
-    const stops= proteins[7].codons;
-    // const stopCodon1 = stops.push(/UAA/g);
-    // const stopCodon2 = stops.push(/UAG/g);
-    // const stopCodon3 = stops.push(/UGA/g);
-    // let position;
-    console.log(stops);
-    // if any part of rna matches regex for STOP, it's invalid
+    ];
+    const notValid = /[^UAGC]+/g;
+    const stop1 = /UAA/g;
+    const stop2 = /UAG/g;
+    const stop3 = /UGA/g;
+    
+    if (rna.match(notValid)) {
+        return polypeptide;
+    }
+    // find first instance of any of the stops:
+    if (rna.match(stop1)) { // 'UAA'
+        foundStop = rna.match(stop1);
+        position = rna.indexOf(foundStop);
+        trimmedRna = rna.substring(0, position);
+        console.log(trimmedRna);
+    } 
+    if (rna.match(stop2)) { // 'UAG'
+        foundStop = rna.match(stop2);
+        position = rna.indexOf(foundStop);
+        trimmedRna = rna.substring(0, position);
+        console.log(trimmedRna);
+    }
+    if (rna.match(stop3)) { // 'UGA'
+        foundStop = rna.match(stop3);
+        position = rna.indexOf(foundStop);
+        trimmedRna = rna.substring(0, position);
+        console.log(trimmedRna);
+    } 
+    //split substring into 3's& save to an array if not empty
+    const codon1 = trimmedRna.slice(0, 3); 
+    const codon2 = trimmedRna.slice(3, 6);
+    const codon3 = trimmedRna.slice(6, 9);
+    const codon4 = trimmedRna.slice(9, 12);
+    if (codon1 != '') {
+        polypeptide.push(codon1);
+    }
+    if (codon2 != '') {
+        polypeptide.push(codon2);
+    }
+    if (codon3 != '') {
+        polypeptide.push(codon3);
+    }
+    if (codon4 != '') {
+        polypeptide.push(codon41);
+    }
 
-    // after that split string into 3's, 
-    // check for matches in proteins
-
-    const codon1 = rna.slice(0, 3); 
-    const codon2 = rna.slice(3, 6);
-    const codon3 = rna.slice(6, 9);
-    const codon4 = rna.slice(10, 12);
-
-    polypeptide.push(codon1, codon2, codon3, codon4);
-    return polypeptide;
+    //iterate over polypeptide array to match to protein names
+    proteins.forEach(function(protein) {
+        const name = protein.name;
+        const codons = protein.codons;
+        // console.log(name, codons);
+    });
+    // match to protein in array using codons
+    return polypeptide
 };
-
-translate("bbbUGABBB");
-
-
+translate();
+// stop: ['UAA', 'UAG', 'UGA']
