@@ -1,9 +1,5 @@
 export const translate = (rna) => {
-    let polypeptide = [];
-    if (rna == undefined) {
-        return polypeptide;
-    }
-    let foundStop, position, trimmedRna;
+    
     const proteins = [
         {   name: 'Methionine',
             codons: ['AUG']
@@ -34,24 +30,29 @@ export const translate = (rna) => {
     const stop1 = /UAA/g;
     const stop2 = /UAG/g;
     const stop3 = /UGA/g;
-    
-    if (rna.match(notValid)) {
+    let polypeptide = [];
+    let foundStop, position, trimmedRna;
+    // validate rna
+    if ((rna == undefined) || (rna ==='') || (rna.match(notValid))) {
         return polypeptide;
+        // throw new Error('Invalid codon');
     }
+    
+
     // find first instance of any of the stops:
-    if (rna.match(stop1)) { // 'UAA'
+    if (rna.match(stop1)) { 
         foundStop = rna.match(stop1);
         position = rna.indexOf(foundStop);
         trimmedRna = rna.substring(0, position);
         console.log(trimmedRna);
     } 
-    if (rna.match(stop2)) { // 'UAG'
+    if (rna.match(stop2)) { 
         foundStop = rna.match(stop2);
         position = rna.indexOf(foundStop);
         trimmedRna = rna.substring(0, position);
         console.log(trimmedRna);
     }
-    if (rna.match(stop3)) { // 'UGA'
+    if (rna.match(stop3)) { 
         foundStop = rna.match(stop3);
         position = rna.indexOf(foundStop);
         trimmedRna = rna.substring(0, position);
@@ -82,7 +83,8 @@ export const translate = (rna) => {
         // console.log(name, codons);
     });
     // match to protein in array using codons
+    // ...???
     return polypeptide
+    
 };
-translate();
-// stop: ['UAA', 'UAG', 'UGA']
+translate('UGAUGU');
