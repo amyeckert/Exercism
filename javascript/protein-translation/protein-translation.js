@@ -34,16 +34,18 @@ export const translate = (rna) => {
     let foundStop;
     let position;
     let trimmedRna = rna;
-    
+
     // validate rna
-    if ((rna == undefined) || (rna === '')) {
-        return polypeptide;
-    }
-    if (rna.match(notValid)) {
+    if (!rna) {
+        return [];
+    } else if (rna.match(notValid)) {
         throw new Error('Invalid codon');
     }
 
     // find first instance of any of the stops and trim sequence
+
+
+
     if (rna.match(stop1)) { 
         foundStop = rna.match(stop1);
         position = rna.indexOf(foundStop);
@@ -62,7 +64,7 @@ export const translate = (rna) => {
 
     // if rna sequence starts with one of the stop codons, return empty array
     if (trimmedRna === '') {
-        return polypeptide;
+        return [];
     }
 
     //split substring into 3's & save to an array if not empty
