@@ -44,19 +44,19 @@ const translate = (rna) => {
         foundStop = rna.match(stop1);
         position = rna.indexOf(foundStop);
         trimmedRna = rna.substring(0, position);
-        console.log(trimmedRna);
+        // console.log(trimmedRna);
     } 
     if (rna.match(stop2)) { 
         foundStop = rna.match(stop2);
         position = rna.indexOf(foundStop);
         trimmedRna = rna.substring(0, position);
-        console.log(trimmedRna);
+        // console.log(trimmedRna);
     }
     if (rna.match(stop3)) { 
         foundStop = rna.match(stop3);
         position = rna.indexOf(foundStop);
         trimmedRna = rna.substring(0, position);
-        console.log(trimmedRna);
+        // console.log(trimmedRna);
     } 
     //split substring into 3's & save to an array if not empty
     const codon1 = trimmedRna.slice(0, 3); 
@@ -84,10 +84,10 @@ const translate = (rna) => {
         for (let i = 0; i < codons.length; i++) {
             if(polypeptide.includes(codons[i])) {
                 translatedRna.push(name);
-            } else {
-                console.log('no match');
-            }
+                // console.log(name);
+            } 
         }
     });
+    return translatedRna;
 };
 translate('AUGUUUUCUUAAAUG');
