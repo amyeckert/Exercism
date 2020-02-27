@@ -1,104 +1,67 @@
-export const translate = (rna) => {
-    const proteins = [
-        {   name: 'Methionine',
-            codons: ['AUG']
-        }, 
-        {   name: 'Phenylalanine',
-            codons: ['UUU', 'UUC']
-        }, 
-        {   name: 'Leucine',
-            codons: ['UUA', 'UUG']
-        }, 
-        {   name: 'Serine',
-            codons: ['UCU', 'UCC', 'UCA', 'UCG']
-        }, 
-        {   name: 'Tyrosine',
-            codons: ['UAU', 'UAC']
-        }, 
-        {   name: 'Cysteine',
-            codons: ['UGU', 'UGC']
-        }, 
-        {   name: 'Tryptophan',
-            codons: ['UGG']
-        }, 
-        {   name: 'STOP',
-            codons: ['UAA', 'UAG', 'UGA']
-        } 
-    ];
-    const notValid = /[^UAGC]+/g; // not valid if any other letters besides these
-    const stop1 = /UAA/;
-    const stop2 = /UAG/;
-    const stop3 = /UGA/;
-    let polypeptide = [];
-    let translatedRna = [];
-    let foundStop;
-    let position;
-    let trimmedRna = rna;
+// export 
+const translate = (rna) => {
 
     // validate rna
+    const notValid = /[^UAGC]+/g; // not valid if any other letters besides these
     if (!rna) {
         return [];
     } else if (rna.match(notValid)) {
         throw new Error('Invalid codon');
     }
 
-    // find first instance of any of the stops and trim sequence
+    const proteins = [
+        {codon: 'AUG', name: 'Methionine'},
+        {codon: 'UUU', name: 'Phenylalanine'},
+        {codon: 'UUC', name : 'Phenylalanine'},
+        {codon: 'UUA', name: 'Leucine'},
+        {codon: 'UUG', name: 'Leucine'},
+        {codon: 'UCU', name : 'Serine'},
+        {codon: 'UCC', name : 'Serine'},
+        {codon: 'UCA', name : 'Serine'},
+        {codon: 'UCG', name : 'Serine'}, 
+        {codon: 'UAU', name : 'Tyrosine'},
+        {codon: 'UAC', name : 'Tyrosine'},
+        {codon: 'UGU', name : 'Cysteine'},
+        {codon: 'UGC', name : 'Cysteine'},
+        {codon: 'UGG', name : 'Tryptophan'},
+        {codon: 'UAA', name : 'STOP'},
+        {codon: 'UAG', name : 'STOP'},
+        {codon: 'UGA', name : 'STOP'},
+    ];
+
+    let translatedRna = []; 
+    let codons = rna.match(/.{1,3}/g);
 
 
+    for (let i = 0; i < codons.length; i++) {
+        let rnaCodon = codons[i]; 
 
-    if (rna.match(stop1)) { 
-        foundStop = rna.match(stop1);
-        position = rna.indexOf(foundStop);
-        trimmedRna = rna.substring(0, position);
-    }
-    if (rna.match(stop2)) { 
-        foundStop = rna.match(stop2);
-        position = rna.indexOf(foundStop);
-        trimmedRna = rna.substring(0, position);
-    }
-    if (rna.match(stop3)) { 
-        foundStop = rna.match(stop3);
-        position = rna.indexOf(foundStop);
-        trimmedRna = rna.substring(0, position);
-    } 
-
-    // if rna sequence starts with one of the stop codons, return empty array
-    if (trimmedRna === '') {
-        return [];
-    }
-
-    //split substring into 3's & save to an array if not empty
-    let codon1 = trimmedRna.slice(0, 3); 
-    let codon2 = trimmedRna.slice(3, 6);
-    let codon3 = trimmedRna.slice(6, 9);
-    let codon4 = trimmedRna.slice(9, 12);
-
-    if (codon1 !== '') {
-        polypeptide.push(codon1);
-    }
-    if (codon2 !== '') {
-        polypeptide.push(codon2);
-    }
-    if (codon3 !== '') {
-        polypeptide.push(codon3);
-    }
-    if (codon4 !== '') {
-        polypeptide.push(codon4);
-    }
-
-    //iterate over polypeptide array to match to protein names
-    proteins.forEach(function(protein) {
-        const name = protein.name;
-        const codons = protein.codons;
-        // check if a polypeptide[i] matches anything in codons array
-        for (let i = 0; i < codons.length; i++) {
-            if(polypeptide.includes(codons[i])) {
-                translatedRna.push(name);
-            } 
+        for( let i = 0; i < rnaCodon.length; i++){ 
+            if ( rnaCodon === 'UAA' || rnaCodon === 'UAG' || rnaCodon === 'UGA') {
+                console.log(codons);
+                codons.splice(i, 1); 
+            }
         }
-    });
+
+        for (let i = 0; i < proteins.length; i++) {
+            let proteinCodon = proteins[i].codon;
+            let proteinName = proteins[i].name;
+
+            //return empty array if rna starts with a stop codon
+            if (codons[0] === 'UAA' || codons[0] === 'UAG' || codons[0] === 'UGA') {
+                translatedRna = [];
+            }
+
+            if (rnaCodon === proteinCodon) {
+                translatedRna.push(proteinName);
+            }
+        }
+    }
     
-    return translatedRna;
+    console.log(translatedRna);
+    
+
+    // return translatedRna;
 };
 
-translate();
+translate('AUGUUUUCUUAAAUG');

@@ -31,9 +31,9 @@
 # Flags:
   `-h, --help`           help for this command
   
-      `--timeout int`   override the default HTTP timeout (seconds)
+      --timeout int   override the default HTTP timeout (seconds)
       
-      `--unmask-token`   will unmask the API during a request/response dump
+      --unmask-token   will unmask the API during a request/response dump
       
   `-v, --verbose`        verbose output
 
