@@ -19,5 +19,4 @@ export const isArmstrongNumber = (number) => {
     }
 
     return false;
-
 };

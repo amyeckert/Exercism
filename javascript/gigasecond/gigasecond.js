@@ -3,9 +3,9 @@
 // A millisecond is 1 ms = 0.001 s.
 
 export const gigasecond = (moment) => {
-    let addInterval = (moment.getTime() + (1000000000 / 0.001));
-    const momentLater = new Date(addInterval);
+    const convertGigasecondToMillisecond = 1000000000 / 0.001;
+    let addInterval = (moment.getTime() + (convertGigasecondToMillisecond));
 
-    return momentLater;
+    return new Date(addInterval);
 };
 
